@@ -1,0 +1,156 @@
+#!/bin/sh
+
+# chkconfig: 45 20 80
+
+RETVAL=0
+
+##################################################################
+#
+#        Russellville  CrownBay    CrossvilleOKI    ML7213
+#monitor LVDS 7       LVDS 13     LVDS 7           LVDS 13
+#Gfx     8086:8108    8086:4108   8086:4108        8086:4108
+#
+#################################################################
+#
+#	unknown
+# 1	Russellville			DEVICE has 8086:8108
+# 2	CrownBay			VENDOR !has 10db && DEVICE has 8086:4108
+# 3	CrossivilleOKI		VENDOR has 10db && DEVICE has 8086:4108
+
+DEVICE_LSPCI=`lspci -n | cut -d$' ' -f3`
+IS_8108=0
+IS_4108=0
+IS_ML7213=0
+
+
+# find_device VALUE VERDOR DIVICE
+# param:		$1 - VALUE
+#				$2 - VENDOR
+#				$3 - DEVICE
+# return value: 1 - found
+#				0 - not found
+
+find_device() {
+	local __resultvar=$1
+	local result=0
+    local oIFS=$IFS
+
+    IFS=$'\n'
+
+	TAG1=$2
+	TAG2=$3
+
+    #for entry in $DEVICE_TEST; do
+	for entry in $DEVICE_LSPCI; do
+        IFS=$':'
+        set -- $entry
+
+		VENDOR=`echo $1`
+		DEVICE=`echo $2`
+
+		if [ x$TAG2 = x ]; then
+			if [ $VENDOR = $TAG1 ]; then
+				#echo "$VENDOR == $TAG1"
+				result=1
+				break
+			fi
+		else
+			if [ $VENDOR = $TAG1 -a $DEVICE = $TAG2 ]; then
+				#echo "$VENDOR == $TAG1 -a $DEVICE == $TAG2 "
+				result=1
+				break
+			fi
+		fi
+
+	done
+
+	eval $__resultvar="'$result'"
+	IFS=$oIFS
+    return $result
+}
+
+find_board_type() {
+	local __resultvar=$1
+	local _board_type="unknown"
+
+	find_device IS_8108 8086 8108
+	find_device IS_4108 8086 4108
+	find_device IS_ML7213 10db
+	find_device IS_CROWNBAY 12d8
+
+	# This logic is stupid and the reliable method is to query the firmware interface, which now is not available yet.
+
+	if [ $IS_8108 -eq '1' ]; then
+		_board_type='Russellville'
+	elif [ $IS_4108 -eq '1' ]; then
+		if [ $IS_ML7213 -eq '1' ]; then
+			_board_type='CrossvilleOKI'
+		elif [ $IS_CROWNBAY -eq '1' ]; then
+			_board_type='CrownBay'
+		else
+			_board_type='NextCom'
+		fi
+	else
+		_board_type='unknown'
+	fi
+
+	eval $__resultvar="'$_board_type'"
+    echo "$_board_type"
+}
+
+
+set_config() {
+        boardname=`find_board_type $platform`
+        echo "Boardname is $boardname"
+	case $boardname in
+		Russellville)
+			configfile='emgd-rv.conf'
+			;;
+		CrownBay)
+			configfile='emgd-cb.conf'
+			;;
+		NextCom)
+			configfile='emgd-rv.conf'
+			;;
+		CrossvilleOKI)
+			configfile='emgd-rv.conf'
+			;;
+		*)
+			configfile=""
+			;;
+	esac
+        echo "Configfile is $configfile"
+	if [ -f /etc/X11/xorg.conf ]; then
+		break;
+	else
+		cp /usr/share/doc/emgd-bin/$configfile /etc/X11/xorg.conf
+	fi
+}
+
+clean_config() {
+	if [ -f /etc/X11/xorg.conf ]; then
+		rm -f /etc/X11/xorg.conf
+	fi
+}
+
+
+platform="unknown"
+configfile='emgd-rv.conf'
+
+
+case "$1" in
+    start|restart|reload|condrestart)
+		echo "[emgd] start...."
+		set_config
+	;;
+    stop|status)
+		echo "[emgd] stop..."
+		clean_config
+	;;
+    *)
+	echo "Usage: $0 {start}"
+	RETVAL=1
+	;;
+esac
+
+exit $RETVAL

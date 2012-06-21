@@ -1,0 +1,136 @@
+* Tue May 22 2012 Quanxian Wang <quanxian.wang@intel.com> - 2535
+- Updated to 2535
+
+* Thu May 17 2012 Quanxian Wang <quanxian.wang@intel.com> - 2443
+- Nextcom platform uses emgd-rv.conf instead of emgd-cb.conf as xorg.conf(TIVI-82)
+
+* Fri May  4 2012 Quanxian Wang <quanxian.wang@intel.com> - 2443
+- Add pc files for development including egl.pc, gbm.pc,
+  vg.pc, glesv2.pc, glesv1_cm.pc (JIRA #TDS-153)
+
+* Thu Apr 19 2012 Quanxian Wang <quanxian.wang@intel.com> - 2443
+- Updated to 2443
+
+* Tuesday Apr 01 2012 Xinyun Liu <xinyun.liu@intel.com> - 2348 
+- Added emgd-bin development package.
+
+* Tuesday Feb 28  2012 Xinyun Liu <xinyun.liu@intel.com> - 2348 
+- Fixed missing file to make wayland ivi-shell work
+
+* Tuesday Feb 22  2012 Xinyun Liu <xinyun.liu@intel.com> - 2348 
+- Updated to 2348 which is for X 1.9.3 and mesa 8.0 and wayland 0.85 
+
+* Tuesday Feb 20  2012 Xinyun Liu <xinyun.liu@intel.com> - 2335 
+- Updated to 2335 which added wayland support.
+
+* Wed Feb 08 2012 Tracy Graydon <tracy.graydon@intel.com> - 
+- Git Tag: 20120208.1
+  8cc9ae9: sources
+
+* Wed Feb 08 2012 Tracy Graydon <tracy.graydon@intel.com> - 
+- Git Tag: 20120208.0
+  1e41ca8: This tarball shouldn't be here.
+
+* Fri Feb 03 2012 Xinyun Liu <xinyun.liu@intel.com> - 
+- Git Tag: 20120203.0
+  c5ea653: start emgd-bin.service after install the driver.
+
+* Wed Jan 25 2012 Xinyun Liu <xinyun.liu@intel.com> - 
+- Git Tag: 20120125.0
+  697d77a: Imported to tizen with new build system
+
+* Mon Nov 21 2011 Liu Xinyun <xinyun.liu@intel.com>  - 2032
+- Imported from MeeGo 1.2.0 update 4
+
+* Mon Aug 1 2011 Matt Roper <matthew.d.roper@intel.com> - 2032
+- Update to EMGD 1.8 release (addresses BMC #22167 & BMC #22168).
+
+* Thu Jun 23 2011 Matt Roper <matthew.d.roper@intel.com> - 2027
+- Fix invisible lockscreen, corrupt task switcher, and other types
+  of incorrect rendering by properly handling the case where no
+  DRIDrawable exists for the X drawable that EGL is trying to
+  bind as a draw surface.  Fixes BMC #19386.
+- Fix QT application crashes on the secondary display by ensuring
+  a proper ARGB native visual is associated with our EGLConfigs
+  so that buggy QT logic doesn't need to be executed.  Fixes
+  BMC #18919.
+
+* Tue Jun 14 2011 Matt Roper <matthew.d.roper@intel.com> - 2001
+- Fix for BMC #19087.  Older versions of our 3D libraries had
+  screwy soname's.  Since rpm upgrades don't remove old libraries
+  until after the %post script, those screwy soname's would
+  overwrite some of the legitimate symbolic links we were trying
+  to create in the new package.  Work around this in our spec
+  file to ensure we aren't left with dangling, incorrect symlinks.
+
+* Fri Jun 3 2011 Matt Roper <matthew.d.roper@intel.com> - 2001
+- Workaround for BMC #16997.  This workaround prevent meego-ux-daemon
+  crashes when QT calls into the EMGD driver without having a
+  properly bound context for the current thread.  However a true
+  fix still needs to be applied in the QT codebase; even though this
+  driver workaround stop the crashes, there will occasionally still be
+  minor graphical corruption on the UX task switcher, likely because
+  the UX is trying to render without a properly bound context.
+- Fixup library soname's + related RPM spec updates
+
+* Fri May 13 2011 Tracy Graydon <tracy.graydon@intel.com> - 1959
+- BMC #16349. Fix the init script and add the %post stuff for chkconfig.
+
+* Thu May 12 2011 Tracy Graydon <tracy.graydon@intel.com> - 1959
+- To fix #16349: implementing the actual init script installation 
+- Changed Russiville to Russellville in emgd-bin.init script.
+- Commented/Uncommented the lines to install emgd-bin.init script to _initdir instead of _bindir
+- Changed date in Xinyun's previous changes because PRC ahead of us and "May 13" freaked out OBS.
+
+* Thu May 12 2011 Liu,Xinyun <xinyun.liu@intel.com> - 1959
+- To fix #16349. Add script to check board information.
+
+* Wed May 4 2011 Matt Roper <matthew.d.roper@intel.com> - 1959
+- Update to EMGD 1.6.2 release (build 1959).
+- EGL support for pixmap rendering (and texture from pixmap
+  functionality via EGLImage) is fully implemented, allowing
+  mcompositor to operate properly (fixes BMC #16730).
+
+* Tue Apr 26 2011 Matt Roper <matthew.d.roper@intel.com> - 1952
+- Update to EMGD 1.6.1 release (build 1952).  Includes EGL workaround
+  to allow meego-ux-daemon to work properly (fixes BMC #13776).
+
+* Fri Apr 15 2011 Matt Roper <matthew.d.roper@intel.com> - 1922
+- Rebuild 1922 package with appropriate PVR debug flags to prevent
+  kernel/user mismatch.  Fixes BMC #16300.
+
+* Fri Apr 15 2011 Liu,Xinyun <xinyun.liu@intel.com> - 1922
+- Fix BMC #15904. Remove redundant files.
+
+* Tue Apr 12 2011 Matt Roper <matthew.d.roper@intel.com> - 1922
+- Update EMGD to 1.6 gold release, build 1922 (fixes BMC #15904)
+- Remove video memory cap for GL/GLES backbuffers (fixes BMC #13504)
+
+* Thu Mar 17 2011 Liu Xinyun <xinyun.liu@intel.com> - 1893
+- Fix BMC #14054. Fixed system responding slowly when emgd enable
+
+* Wed Mar 16 2011 Matt Roper <matthew.d.roper@intel.com> - 1893
+- Update to 1.6 EC3 release (build 1893) -- update for BMC #12416.
+- Should fix some STM SDVO issues.
+- Ensure libEMGDScopeServices.so is symlinked to libPVRScopeServices.so
+  so that PVRTune will work properly.
+
+* Mon Mar 14 2011 Liu,Xinyun <xinyun.liu@intel.com> - 1875
+- Fixes BMC #13586. Update docs. RV and NV use the same conf.
+
+* Wed Mar 02 2011 Matt Roper <matthew.d.roper@intel.com> - 1875
+- Update EMGD user mode to build 1875 (first build to include libva 1.0.10 support).
+- Fixes BMC #13500.
+
+* Fri Feb 18 2011 Matt Roper <matthew.d.roper@intel.com> - 1859
+- Fix BMC #12416. Update EMGD user mode driver.
+- Update to 1.6 EC1 release (build 1859).
+
+* Fri Jan 14 2011 Liu Xinyun <xinyun.liu@intel.com> - 1812
+- Fix BMC #12416. Update EMGD user mode driver.
+- Add video driver and configuration file for CrownBay and Russellville.
+- Update license. 
+
+* Fri Jan 07 2011 Liu Xinyun <xinyun.liu@intel.com> - 1812
+- Fix BMC #12416. Add EMGD user mode driver.
+- Initial version,imported from ECG 1812 build.
