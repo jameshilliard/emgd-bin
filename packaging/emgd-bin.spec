@@ -35,15 +35,27 @@ Source0: %{name}-%{version}.tar.bz2
 Source1: emgd-bin.init
 Source2: emgd-bin.service
 
-Provides: libPVRScopeServices.so
-Conflicts: mesa-libEGL mesa-libGLESv1 mesa-libGLESv2 mesa-libOpenVG pvr-bin-mrst pvr-bin-oaktrail pvr-bin-cdv
-#Requires: xorg-x11-server-Xorg
-Requires(post): /sbin/ldconfig
-Requires(postun): /sbin/ldconfig
-
 %description
 EMGD runtime graphics libraries
 
+%package common
+Summary: Common Intel EMGD graphics driver
+Provides: libPVRScopeServices.so
+Conflicts: mesa-libEGL mesa-libGLESv1 mesa-libGLESv2 mesa-libOpenVG pvr-bin-mrst pvr-bin-oaktrail pvr-bin-cdv
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+
+%description common
+Common EMGD runtime graphics libraries
+
+%package x
+Summary: Special X libraries
+Group: System/Libraries
+Requires: pciutils
+Requires: %{name}-common
+
+%description x
+Special X libraries
 
 %package devel
 Summary: EMGD development headers
@@ -103,10 +115,6 @@ install -m 755 libwayland-emgd.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
 install -m 755 libemgdPVR2D_WAYLANDWSEGL.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
 install -m 755 libemgdPVR2D_GBMWSEGL.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
 install -m 755 libva.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
-#install -m 755 libva-glx.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
-#install -m 755 libva-egl.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
-#install -m 755 libva-tpi.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
-#install -m 755 libva-x11.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
 #
 # Development pkgconfig - GLES2, EGL, gbm
 #
@@ -180,14 +188,6 @@ ln -s -f libEMGDScopeServices.so.%{libversion} libPVRScopeServices.so
 ln -s -f libemgdPVR2D_GBMWSEGL.so.%{libversion} libemgdPVR2D_GBMWSEGL.so
 ln -s -f libva.so.%{libversion} libva.so.1.0.12
 ln -s -f libva.so.%{libversion} libva.so.1
-#ln -s -f libva-glx.so.%{libversion} libva-glx.so.1.0.12
-#ln -s -f libva-glx.so.%{libversion} libva-glx.so.1
-#ln -s -f libva-egl.so.%{libversion} libva-egl.so.1.0.12
-#ln -s -f libva-egl.so.%{libversion} libva-egl.so.1
-#ln -s -f libva-tpi.so.%{libversion} libva-tpi.so.1.0.12
-#ln -s -f libva-tpi.so.%{libversion} libva-tpi.so.1
-#ln -s -f libva-x11.so.%{libversion} libva-x11.so.1.0.12
-#ln -s -f libva-x11.so.%{libversion} libva-x11.so.1
 popd
 
 
@@ -204,9 +204,6 @@ rm -f /usr/lib/libGLESv2.so.1.1.*
 rm -f /usr/lib/libEGL.so.1.1.*
 
 /sbin/ldconfig
-#/sbin/chkconfig --add emgd-bin
-#/sbin/chkconfig --levels 345 emgd-bin on
-#/sbin/chkconfig --levels 0126 emgd-bin off
 
 mkdir -p /lib/systemd/system/sysinit.target.wants/
 pushd /lib/systemd/system/sysinit.target.wants/
@@ -232,14 +229,19 @@ if [ -x /bin/systemctl ]; then
 fi
 
 
-%files
+%files common
 %defattr(-,root,root,-)
 %{_docdir}/%{name}/license.txt
 %{_docdir}/%{name}/readme.txt
-%{_docdir}/%{name}/emgd-*.conf
-%config(noreplace) /etc/powervr.ini
 %doc %{_mandir}/man4/emgd*
-%{_libdir}/*
+%config(noreplace) /etc/powervr.ini
+%{_libdir}/dri/*
+%{_libdir}/lib*
+
+%files x
+%defattr(-,root,root,-)
+%{_libdir}/xorg/*
+%{_docdir}/%{name}/emgd-*.conf
 /usr/libexec/emgd-bin.init
 /lib/systemd/system/emgd-bin.service
 
