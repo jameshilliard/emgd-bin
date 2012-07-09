@@ -86,7 +86,7 @@ install -m 644 -D usr/share/doc/emgd/readme.txt $RPM_BUILD_ROOT%{_docdir}/%{name
 install -m 644 -D usr/share/doc/emgd/emgd-cb.conf $RPM_BUILD_ROOT%{_docdir}/%{name}/
 install -m 644 -D usr/share/doc/emgd/emgd-rv.conf $RPM_BUILD_ROOT%{_docdir}/%{name}/
 install -m 755 -D %{SOURCE1} $RPM_BUILD_ROOT/usr/libexec/emgd-bin.init
-install -m 755 -D %{SOURCE2} $RPM_BUILD_ROOT/lib/systemd/system/emgd-bin.service
+install -m 755 -D %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/systemd/system/emgd-bin.service
 
 install -m 644 -D etc/powervr.ini $RPM_BUILD_ROOT/etc/powervr.ini
 install -m 644 -D usr/share/man/man4/emgd.4.gz $RPM_BUILD_ROOT%{_mandir}/man4/
@@ -167,8 +167,21 @@ install -m 644 -D VG/vgplatform.h $RPM_BUILD_ROOT/usr/include/VG/vgplatform.h
 install -m 644 -D VG/vgu.h $RPM_BUILD_ROOT/usr/include/VG/vgu.h
 popd
 pushd $RPM_BUILD_ROOT%{_libdir}
+ln -s -f libEMGDOGL.so.%{libversion} libEMGDOGL.so.1
+ln -s -f libEMGDOGL.so.%{libversion} libEMGDOGL.so
+ln -s -f libemgdsrv_init.so.%{libversion} libemgdsrv_init.so.1
+ln -s -f libemgdsrv_init.so.%{libversion} libemgdsrv_init.so
+ln -s -f libemgdsrv_um.so.%{libversion} libemgdsrv_um.so.1
+ln -s -f libemgdsrv_um.so.%{libversion} libemgdsrv_um.so
+ln -s -f libemgdglslcompiler.so.%{libversion} libemgdglslcompiler.so.1
+ln -s -f libemgdglslcompiler.so.%{libversion} libemgdglslcompiler.so
+ln -s -f libemgdPVR2D_DRIWSEGL.so.%{libversion} libemgdPVR2D_DRIWSEGL.so.1
+ln -s -f libemgdPVR2D_DRIWSEGL.so.%{libversion} libemgdPVR2D_DRIWSEGL.so
+ln -s -f libemgdPVR2D_WAYLANDWSEGL.so.%{libversion} libemgdPVR2D_WAYLANDWSEGL.so.1
+ln -s -f libemgdPVR2D_WAYLANDWSEGL.so.%{libversion} libemgdPVR2D_WAYLANDWSEGL.so
+ln -s -f libEMGD2d.so.%{libversion} libEMGD2d.so.1
+ln -s -f libEMGD2d.so.%{libversion} libEMGD2d.so
 ln -s -f libOpenVG.so.%{libversion} libOpenVG.so.1
-ln -s -f libOpenVG.so.%{libversion} libOpenVG.so
 ln -s -f libOpenVG.so.%{libversion} libOpenVG.so
 ln -s -f libOpenVGU.so.%{libversion} libOpenVGU.so.1
 ln -s -f libOpenVGU.so.%{libversion} libOpenVGU.so
@@ -178,6 +191,8 @@ ln -s -f libGLES_CM.so.%{libversion} libGLES_CM.so.1
 ln -s -f libGLES_CM.so.%{libversion} libGLES_CM.so
 ln -s -f libEGL.so.%{libversion} libEGL.so.1
 ln -s -f libEGL.so.%{libversion} libEGL.so
+ln -s -f libEMGDegl.so.%{libversion} libEMGDegl.so.1
+ln -s -f libEMGDegl.so.%{libversion} libEMGDegl.so
 ln -s -f libgbm.so.%{libversion} libgbm.so.1
 ln -s -f libgbm.so.%{libversion} libgbm.so
 ln -s -f libwayland-egl.so.%{libversion} libwayland-egl.so.1
@@ -188,6 +203,7 @@ ln -s -f libEMGDScopeServices.so.%{libversion} libPVRScopeServices.so
 ln -s -f libemgdPVR2D_GBMWSEGL.so.%{libversion} libemgdPVR2D_GBMWSEGL.so
 ln -s -f libva.so.%{libversion} libva.so.1.0.12
 ln -s -f libva.so.%{libversion} libva.so.1
+ln -s -f libva.so.%{libversion} libva.so
 popd
 
 
@@ -205,8 +221,8 @@ rm -f /usr/lib/libEGL.so.1.1.*
 
 /sbin/ldconfig
 
-mkdir -p /lib/systemd/system/sysinit.target.wants/
-pushd /lib/systemd/system/sysinit.target.wants/
+mkdir -p /usr/lib/systemd/system/sysinit.target.wants/
+pushd /usr/lib/systemd/system/sysinit.target.wants/
 ln -sf ../emgd-bin.service emgd-bin.service
 popd
 
@@ -217,7 +233,7 @@ fi
 
 %postun
 /sbin/ldconfig
-rm -f /lib/systemd/system/sysinit.target.wants/emgd-bin.service
+rm -f /usr/lib/systemd/system/sysinit.target.wants/emgd-bin.service
 if [ -x /bin/systemctl ]; then
     systemctl daemon-reload >/dev/null 2>&1 || :
 fi
@@ -243,7 +259,7 @@ fi
 %{_libdir}/xorg/*
 %{_docdir}/%{name}/emgd-*.conf
 /usr/libexec/emgd-bin.init
-/lib/systemd/system/emgd-bin.service
+%{_libdir}/systemd/system/emgd-bin.service
 
 %files devel
 %defattr(-,root,root,-)
