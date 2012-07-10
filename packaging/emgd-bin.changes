@@ -1,3 +1,6 @@
+* Tue Jul 10 2012 Quanxian Wang <quanxian.wang@intel.com> - 2667
+- Typo Error and bug fix for emgd-bin.init
+
 * Sun Jul  8 2012 Quanxian Wang <quanxian.wang@intel.com> - 2667
 - change location of emgd-bin.service from /lib/systemd to /usr/lib/systemd
 - Add missing library link

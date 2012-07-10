@@ -6,9 +6,9 @@ RETVAL=0
 
 ##################################################################
 #
-#        Russellville  CrownBay    CrossvilleOKI    ML7213
-#monitor LVDS 7       LVDS 13     LVDS 7           LVDS 13
-#Gfx     8086:8108    8086:4108   8086:4108        8086:4108
+#        Russellville  CrownBay    CrossvilleOKI    ML7213   NexCOM
+#monitor LVDS 7       LVDS 13     LVDS 7           LVDS 13   LVDS 7
+#Gfx     8086:8108    8086:4108   8086:4108        8086:4108 8086:4108
 #
 #################################################################
 #
@@ -88,7 +88,7 @@ find_board_type() {
 		elif [ $IS_CROWNBAY -eq '1' ]; then
 			_board_type='CrownBay'
 		else
-			_board_type='NextCom'
+			_board_type='NexCom'
 		fi
 	else
 		_board_type='unknown'
@@ -109,7 +109,7 @@ set_config() {
 		CrownBay)
 			configfile='emgd-cb.conf'
 			;;
-		NextCom)
+		NexCom)
 			configfile='emgd-rv.conf'
 			;;
 		CrossvilleOKI)
@@ -123,7 +123,7 @@ set_config() {
 	if [ -f /etc/X11/xorg.conf ]; then
 		break;
 	else
-		cp /usr/share/doc/emgd-bin/$configfile /etc/X11/xorg.conf
+		/bin/cp /usr/share/doc/emgd-bin/$configfile /etc/X11/xorg.conf
 	fi
 }
 
