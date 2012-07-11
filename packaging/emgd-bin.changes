@@ -1,3 +1,10 @@
+* Wed Jul 11 2012 Quanxian Wang <quanxian.wang@intel.com> - 2667
+- Adjust emgd-bin.service to be finished before uxlaunch.service
+  uxlaunch.service is in graphical.target of systemd which require
+  multi-user.target. Put emgd-bin.service in multi-user.service will
+  implement this objective.
+  
+
 * Tue Jul 10 2012 Quanxian Wang <quanxian.wang@intel.com> - 2667
 - Typo Error and bug fix for emgd-bin.init
 

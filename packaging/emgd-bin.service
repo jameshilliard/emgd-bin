@@ -1,11 +1,10 @@
 [Unit]
 Description=EMGD Graphics Driver Setup
-DefaultDependencies=no
-Before=sysinit.target
+Before=graphical.target
 
 [Service]
 Type=oneshot
 ExecStart=/usr/libexec/emgd-bin.init start
 
 [Install]
-WantedBy=basic.target
+WantedBy=multi-user.target

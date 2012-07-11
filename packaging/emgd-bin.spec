@@ -221,8 +221,8 @@ rm -f /usr/lib/libEGL.so.1.1.*
 
 /sbin/ldconfig
 
-mkdir -p /usr/lib/systemd/system/sysinit.target.wants/
-pushd /usr/lib/systemd/system/sysinit.target.wants/
+mkdir -p /usr/lib/systemd/system/multi-user.target.wants/
+pushd /usr/lib/systemd/system/multi-user.target.wants/
 ln -sf ../emgd-bin.service emgd-bin.service
 popd
 
@@ -233,7 +233,7 @@ fi
 
 %postun
 /sbin/ldconfig
-rm -f /usr/lib/systemd/system/sysinit.target.wants/emgd-bin.service
+rm -f /usr/lib/systemd/system/multi-user.target.wants/emgd-bin.service
 if [ -x /bin/systemctl ]; then
     systemctl daemon-reload >/dev/null 2>&1 || :
 fi
