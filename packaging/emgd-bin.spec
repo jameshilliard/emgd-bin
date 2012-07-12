@@ -221,6 +221,7 @@ rm -f /usr/lib/libEGL.so.1.1.*
 
 /sbin/ldconfig
 
+%post x
 mkdir -p /usr/lib/systemd/system/multi-user.target.wants/
 pushd /usr/lib/systemd/system/multi-user.target.wants/
 ln -sf ../emgd-bin.service emgd-bin.service
@@ -233,17 +234,17 @@ fi
 
 %postun
 /sbin/ldconfig
+
+%postun x
 rm -f /usr/lib/systemd/system/multi-user.target.wants/emgd-bin.service
 if [ -x /bin/systemctl ]; then
     systemctl daemon-reload >/dev/null 2>&1 || :
 fi
 
-
-%preun
+%preun x
 if [ -x /bin/systemctl ]; then
     sytemctl stop emgd-bin.service >/dev/null 2>&1 || :
 fi
-
 
 %files common
 %defattr(-,root,root,-)
