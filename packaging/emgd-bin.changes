@@ -1,3 +1,6 @@
+* Wed Jul 18 2012 Quanxian Wang <quanxian.wang@intel.com> - 2667
+- Adding the X configure file for keyboard and mouse 
+
 * Thu Jul 12 2012 Quanxian Wang <quanxian.wang@intel.com> - 2667
 - Add missing postun, pre, post for emgd-bin-x package.
 
