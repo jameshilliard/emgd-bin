@@ -274,3 +274,5 @@ fi
 %{_libdir}/libgbm.so
 %{_libdir}/libwayland-egl.so
 %{_libdir}/pkgconfig/*
+
+#test
