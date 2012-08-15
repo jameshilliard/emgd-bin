@@ -42,6 +42,7 @@ EMGD runtime graphics libraries
 Summary: Common Intel EMGD graphics driver
 Provides: libPVRScopeServices.so
 Conflicts: mesa-libEGL mesa-libGLESv1 mesa-libGLESv2 mesa-libOpenVG pvr-bin-mrst pvr-bin-oaktrail pvr-bin-cdv
+Requires: intel-emgd-kmod
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 
