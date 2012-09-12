@@ -46,8 +46,8 @@ union gbm_bo_handle {
 };
 
 enum gbm_bo_format {
-   GBM_BO_FORMAT_XRGB8888,
-   GBM_BO_FORMAT_ARGB8888,
+   GBM_BO_FORMAT_XRGB8888, 
+   GBM_BO_FORMAT_ARGB8888
 };
 
 #define __gbm_fourcc_code(a,b,c,d) ((uint32_t)(a) | ((uint32_t)(b) << 8) | \
@@ -150,11 +150,12 @@ enum gbm_bo_format {
 #define GBM_FORMAT_YVU422	__gbm_fourcc_code('Y', 'V', '1', '6') /* 2x1 subsampled Cr (1) and Cb (2) planes */
 #define GBM_FORMAT_YUV444	__gbm_fourcc_code('Y', 'U', '2', '4') /* non-subsampled Cb (1) and Cr (2) planes */
 #define GBM_FORMAT_YVU444	__gbm_fourcc_code('Y', 'V', '2', '4') /* non-subsampled Cr (1) and Cb (2) planes */
+
 enum gbm_bo_flags {
    GBM_BO_USE_SCANOUT      = (1 << 0),
    GBM_BO_USE_CURSOR_64X64 = (1 << 1),
    GBM_BO_USE_RENDERING    = (1 << 2),
-   GBM_BO_USE_WRITE        = (1 << 3),
+   GBM_BO_USE_WRITE    	   = (1 << 3),
 };
 
 int
@@ -178,12 +179,18 @@ gbm_bo_create(struct gbm_device *gbm,
               uint32_t width, uint32_t height,
               uint32_t format, uint32_t flags);
 
+#define GBM_BO_IMPORT_WL_BUFFER         0x5501
+#define GBM_BO_IMPORT_EGL_IMAGE         0x5502
+
+struct gbm_bo *
+gbm_bo_import(struct gbm_device *gbm, uint32_t type,
+              void *buffer, uint32_t usage);
+
 struct gbm_bo *
 gbm_bo_create_from_egl_image(struct gbm_device *gbm,
                              void *egl_dpy, void *egl_img,
                              uint32_t width, uint32_t height,
                              uint32_t usage);
-
 uint32_t
 gbm_bo_get_width(struct gbm_bo *bo);
 
@@ -192,6 +199,10 @@ gbm_bo_get_height(struct gbm_bo *bo);
 
 uint32_t
 gbm_bo_get_pitch(struct gbm_bo *bo);
+
+uint32_t
+gbm_bo_get_stride(struct gbm_bo *bo);
+
 uint32_t
 gbm_bo_get_format(struct gbm_bo *bo);
 
@@ -200,8 +211,10 @@ gbm_bo_get_device(struct gbm_bo *bo);
 
 union gbm_bo_handle
 gbm_bo_get_handle(struct gbm_bo *bo);
+
 int
 gbm_bo_write(struct gbm_bo *bo, const void *buf, size_t count);
+
 void
 gbm_bo_set_user_data(struct gbm_bo *bo, void *data,
 		     void (*destroy_user_data)(struct gbm_bo *, void *));
@@ -211,6 +224,7 @@ gbm_bo_get_user_data(struct gbm_bo *bo);
 
 void
 gbm_bo_destroy(struct gbm_bo *bo);
+
 struct gbm_surface *
 gbm_surface_create(struct gbm_device *gbm,
                    uint32_t width, uint32_t height,

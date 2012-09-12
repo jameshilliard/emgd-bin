@@ -6,7 +6,7 @@ includedir=/usr/include
 Name: vg
 Description: PowerVR OpenVG 1.0 library
 Requires.private: 
-Version: 8.0.0
+Version: 8.1.0
 Libs: -L${libdir} -lOpenVG
 Libs.private: 
 Cflags: -I${includedir} 

@@ -23,13 +23,14 @@
 
 Name: emgd-bin
 Summary: Intel EMGD graphics driver
-Version: 2667
+Version: 3104
 Release: 1.8%{?dist}
 License: Intel Proprietary
 Group: System/Libraries
 ExclusiveArch: %{ix86}
 URL: http://edc.intel.com/Software/Downloads/EMGD/
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
+Requires:  libva
 
 Source0: %{name}-%{version}.tar.bz2
 Source1: emgd-bin.init
@@ -116,7 +117,6 @@ install -m 755 libwayland-egl.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
 install -m 755 libwayland-emgd.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
 install -m 755 libemgdPVR2D_WAYLANDWSEGL.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
 install -m 755 libemgdPVR2D_GBMWSEGL.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
-install -m 755 libva.so.%{libversion} $RPM_BUILD_ROOT%{_libdir}/
 #
 # Development pkgconfig - GLES2, EGL, gbm
 #
@@ -203,9 +203,6 @@ ln -s -f libwayland-emgd.so.%{libversion} libwayland-emgd.so.1
 ln -s -f libwayland-emgd.so.%{libversion} libwayland-emgd.so
 ln -s -f libEMGDScopeServices.so.%{libversion} libPVRScopeServices.so
 ln -s -f libemgdPVR2D_GBMWSEGL.so.%{libversion} libemgdPVR2D_GBMWSEGL.so
-ln -s -f libva.so.%{libversion} libva.so.1.0.12
-ln -s -f libva.so.%{libversion} libva.so.1
-ln -s -f libva.so.%{libversion} libva.so
 popd
 
 
