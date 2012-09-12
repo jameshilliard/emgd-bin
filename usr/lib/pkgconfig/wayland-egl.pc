@@ -6,7 +6,7 @@ includedir=/usr/include
 Name: wayland-egl
 Description: Mesa wayland-egl library
 Requires.private: wayland-client libdrm
-Version: 8.0.0
+Version: 8.1.0
 Libs: -L${libdir} -lwayland-egl
 Libs.private: 
 Cflags: -I${includedir} 

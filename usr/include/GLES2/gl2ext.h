@@ -216,6 +216,14 @@ typedef void* GLeglImageOES;
 #define GL_UNSIGNED_INT_2_10_10_10_REV_EXT                      0x8368
 #endif
 
+/* GL_EXT_multisampled_render_to_texture */
+#ifndef GL_EXT_multisampled_render_to_texture
+#define GL_RENDERBUFFER_SAMPLES_EXT                             0x8CAB
+#define GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT               0x8D56
+#define GL_MAX_SAMPLES_EXT                                      0x8D57
+#define GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_SAMPLES_EXT           0x8D6C
+#endif
+
 /*------------------------------------------------------------------------*
  * IMG extension tokens
  *------------------------------------------------------------------------*/
@@ -577,6 +585,17 @@ typedef void (GL_APIENTRYP PFNGLMULTIDRAWELEMENTSEXTPROC) (GLenum mode, const GL
 /* GL_EXT_texture_type_2_10_10_10_REV */
 #ifndef GL_EXT_texture_type_2_10_10_10_REV
 #define GL_EXT_texture_type_2_10_10_10_REV 1
+#endif
+
+/* GL_EXT_multisampled_render_to_texture */
+#ifndef GL_EXT_multisampled_render_to_texture
+#define GL_EXT_multisampled_render_to_texture 1
+#ifdef GL_GLEXT_PROTOTYPES
+GL_APICALL void GL_APIENTRY glRenderbufferStorageMultisampleEXT (GLenum, GLsizei, GLenum, GLsizei, GLsizei);
+GL_APICALL void GL_APIENTRY glFramebufferTexture2DMultisampleEXT (GLenum, GLenum, GLenum, GLuint, GLint, GLsizei);
+#endif
+typedef void (GL_APIENTRYP PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC) (GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+typedef void (GL_APIENTRYP PFNGLFRAMEBUFFERTEXTURE2DMULTISAMPLEEXTPROC) (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples);
 #endif
 
 /*------------------------------------------------------------------------*
