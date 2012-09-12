@@ -1,3 +1,6 @@
+* Wed Sep 12 2012 Quanxian Wang <quanxian.wang@intel.com> - 3104
+- update to 3104
+
 * Wed Jul 20 2012 Quanxian Wang <quanxian.wang@intel.com> - 2667
 - move keyboard and mouse configuration file to xorg-x11-server
 
@@ -28,7 +31,8 @@
 
 * Tue Jun 26 2012 Quanxian Wang <quanxian.wang@intel.com> - 2667
 - delete original messy libraries and config files and
-  use original package directory and file structure provided by EMGD team, it will be convenient to maintain emgd-bin package in Tizen.
+  use original package directory and file structure provided by EMGD team,
+  it will be convenient to maintain emgd-bin package in Tizen.
 - upgrade to experimental 2667
 
 * Thu Jun 21 02:53:40 UTC 2012 - tracy.graydon@intel.com
