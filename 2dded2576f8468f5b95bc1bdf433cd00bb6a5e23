@@ -1,0 +1,8 @@
+Change-Id: I2dded2576f8468f5b95bc1bdf433cd00bb6a5e23
+Code-Review+2: Wang Quanxian <quanxian.wang@intel.com>
+Verified+1: Wang Quanxian <quanxian.wang@intel.com>
+Submitted-by: Wang Quanxian <quanxian.wang@intel.com>
+Submitted-at: Wed, 12 Sep 2012 17:09:39 +0900
+Reviewed-on: http://review.tizen.org/gerrit/1685
+Project: profile/ivi/emgd-bin
+Branch: refs/heads/master
