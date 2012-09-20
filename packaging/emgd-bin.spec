@@ -35,6 +35,7 @@ Requires:  libva
 Source0: %{name}-%{version}.tar.bz2
 Source1: emgd-bin.init
 Source2: emgd-bin.service
+Source3: 51-mouse-quirks.conf
 
 %description
 EMGD runtime graphics libraries
@@ -90,6 +91,7 @@ install -m 644 -D usr/share/doc/emgd/emgd-cb.conf $RPM_BUILD_ROOT%{_docdir}/%{na
 install -m 644 -D usr/share/doc/emgd/emgd-rv.conf $RPM_BUILD_ROOT%{_docdir}/%{name}/
 install -m 755 -D %{SOURCE1} $RPM_BUILD_ROOT/usr/libexec/emgd-bin.init
 install -m 755 -D %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/systemd/system/emgd-bin.service
+install -m 755 -D %{SOURCE3} $RPM_BUILD_ROOT/etc/X11/xorg.conf.d/51-mouse-quirks.conf
 
 install -m 644 -D etc/powervr.ini $RPM_BUILD_ROOT/etc/powervr.ini
 install -m 644 -D usr/share/man/man4/emgd.4.gz $RPM_BUILD_ROOT%{_mandir}/man4/
@@ -260,6 +262,7 @@ fi
 %{_docdir}/%{name}/emgd-*.conf
 /usr/libexec/emgd-bin.init
 %{_libdir}/systemd/system/emgd-bin.service
+/etc/X11/xorg.conf.d/51-mouse-quirks.conf
 
 %files devel
 %defattr(-,root,root,-)
