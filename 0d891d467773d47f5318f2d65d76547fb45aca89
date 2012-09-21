@@ -1,0 +1,8 @@
+Change-Id: I0d891d467773d47f5318f2d65d76547fb45aca89
+Code-Review+2: Rusty Lynch <rusty.lynch@intel.com>
+Verified+1: Rusty Lynch <rusty.lynch@intel.com>
+Submitted-by: Rusty Lynch <rusty.lynch@intel.com>
+Submitted-at: Fri, 21 Sep 2012 10:15:06 +0900
+Reviewed-on: http://review.tizen.org/gerrit/1791
+Project: profile/ivi/emgd-bin
+Branch: refs/heads/master
